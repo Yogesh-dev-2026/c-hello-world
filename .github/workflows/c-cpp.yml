@@ -1,4 +1,4 @@
-name: C Hello World CI
+name: Containerized C Build
 
 on:
   push:
@@ -7,16 +7,20 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    # NO FORCE ENV VARIABLE NEEDED HERE
+    # Forces the job to run inside a clean, modern Alpine Linux container
+    container:
+      image: alpine:latest
 
     steps:
-      # Using v4/v5 explicitly maps to the newer runtime configurations
-      - name: Checkout code
-        uses: actions/checkout@v4 
+      - name: Install Build Essentials
+        run: apk add --no-cache gcc musl-dev git
 
-      - name: Compile C Program
-        run: gcc main.c -o greeting
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Run Program with Input
-        run: echo "Yogesh" | ./greeting
+      - name: Compile and Run Code
+        run: |
+          gcc main.c -o greeting
+          echo "Yogesh" | ./greeting
+
 
