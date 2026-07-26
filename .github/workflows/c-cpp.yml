@@ -1,0 +1,22 @@
+name: C Hello World CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # NO FORCE ENV VARIABLE NEEDED HERE
+
+    steps:
+      # Using v4/v5 explicitly maps to the newer runtime configurations
+      - name: Checkout code
+        uses: actions/checkout@v4 
+
+      - name: Compile C Program
+        run: gcc main.c -o greeting
+
+      - name: Run Program with Input
+        run: echo "Yogesh" | ./greeting
+
