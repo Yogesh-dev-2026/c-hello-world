@@ -22,5 +22,6 @@ jobs:
         run: |
           gcc main.c -o greeting
           echo "Yogesh" | ./greeting
+          
 
 
